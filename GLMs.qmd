@@ -1,0 +1,231 @@
+---
+format: 
+    revealjs:
+        slide-number: false
+        theme: [default, style.scss]
+        footer: "[https://www.BedeFfinianRoweDavies.com](www.bedeffinianrowedavies.com)"
+        logo: Data/Input/Stats.png
+        width: 2400
+        height: 1350
+---
+##
+
+::: {style="position: absolute; left: 500px; top: 10px; height: 200px; width: 1650px; background-color: #abdbe3; padding: 20px; padding-left: 50px;"}
+[A Practical Introduction to Regression with (General/Generalised) Linear Models.]{style="font-size: 90px; font-weight: bold; line-height: 1em; margin: 0px"}
+
+:::
+
+::: {style="position: absolute; left: 500px; bottom: 1%; height: 150px; width: 520px; background-color: #abdbe3; padding: 20px; padding-left: 50px;"}
+
+[Bede Ffinian Rowe Davies]{style="font-size: 45px; font-weight: bold;"}
+
+[Post-Doctoral Researcher]{style="font-size: 40px; font-weight: bold;"}
+
+:::: 
+
+
+::: {style="position: absolute; left: 1500px; bottom: 1%; height: 150px; width: 520px; background-color: #abdbe3; padding: 20px; padding-left: 50px;"}
+
+[University of Nantes]{style="font-size: 45px; font-weight: bold;"}
+
+[Spring Semester 2023]{style="font-size: 40px; font-weight: bold;"}
+
+:::: 
+
+
+::: {.absolute bottom="14%" left="28%"}
+![](Data/Input/Example_Plot.png){height="850"}
+:::
+
+
+```{r}
+#| warning: false
+#| echo: false
+#| results: hide
+
+
+library(Utilities.Package)
+library(tidyverse)
+
+n=50
+a=2
+b=2
+x=seq(1,100,length.out=n)
+y=a+b*x
+o=10
+u=rnorm(n,mean = y,sd=o)
+
+p1<-as_tibble(y=y,u=u,x=x) %>% 
+ggplot()+
+  geom_line(aes(x=x,y=y),linewidth=2,colour="darkcyan",alpha=0.7)+
+  geom_point(aes(x=x,y=u),size=2,colour="grey50")+
+  theme_Bede()
+
+p2<-as_tibble(y=y,u=u,x=x) %>% 
+ggplot()+
+  geom_line(aes(x=x,y=y),linewidth=2,colour="darkcyan",alpha=0.7)+
+  geom_segment(aes(x=x,xend=x,y=y,yend=u),colour="red")+
+  geom_point(aes(x=x,y=u),size=2,colour="grey50")+
+  theme_Bede()
+
+
+
+```
+
+## Overview {style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+1 [2 3 4 5 6]{style="opacity:0.25"}
+:::
+:::
+
+::: {.incremental}
+
+- [Response Variable Data Types]{style="font-size: 50px;"}
+
+    - [Continuous? Integers? Positive? Contain Zeros?]{style="font-size: 40px;" }
+    
+- [What is a General Linear Model (GLM)?]{style="font-size: 50px;"}
+
+    - [allow the prediction of a response variable by independent variable(s)]{style="font-size: 40px;" }
+    
+    - [Equivalent to Correlation, t-tests, ANOVA, ANCOVA etc.]{style="font-size: 40px;" }
+
+- [What is a GLM?]{style="font-size: 50px;"}
+
+    - [Higher Flexibilty When Understood]{style="font-size: 40px;"}
+
+    - [Can Model Complex Relationships]{style="font-size: 40px;"}
+
+    - [Can be used for Prediction or Description (or both)]{style="font-size: 40px;"}
+
+- [When to Use a GLM?]{style="font-size: 50px;"}
+
+    - [Assess Relationships Between Different Data Types]{style="font-size: 40px;"}
+
+:::
+
+## Data Types {style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1]{style="opacity:0.25"} 2 [3 4 5 6]{style="opacity:0.25"}
+:::
+:::
+
+::: {.incremental}
+
+- [Response Data Types (Independent Variable):]{style="font-size: 50px;left: 500px;"}
+
+    - [Continuous and All Real Numbers: Gaussian (Normal)]{style="font-size: 40px;"}
+
+    - [Continuous and All Positive Values: Gamma]{style="font-size: 40px;"}
+    
+    - [Continuous and Bound Between Range: Beta]{style="font-size: 40px;"}
+
+    - [Discrete and all Non-Negative Values: Poisson]{style="font-size: 40px;"}
+   
+    - [Discrete and Set Upper Bound Values: Binomial]{style="font-size: 40px;"}
+
+- [Predictor/Fixed Effects (Dependent Variables):]{style="font-size: 50px;"}
+
+    - [Continuous]{style="font-size: 40px;"}
+
+    - [Factors/Groups]{style="font-size: 40px;"}
+
+    - [Combinations of Above]{style="font-size: 40px;"}
+
+:::
+
+
+## Continuous and All Real Numbers: Gaussian {style="font-size: 60px; font-weight: bold;"}
+
+### Linear Model {style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2]{style="opacity:0.25"} 3 [4 5 6]{style="opacity:0.25"}
+:::
+:::
+
+
+:::: {.columns}
+::: {.column width="40%"}
+$y = Normal(\mu,\sigma)$
+
+$\mu = \alpha + \beta_{1}x + \epsilon$
+
+$y = Normal(\alpha + \beta_{1}x,\sigma)$
+:::
+
+::: {.column width="60%"}
+$y$ normal distribution with mean $\mu$ and SD $\sigma$
+
+$\alpha$ is the intercept when $\beta_{1}x = 0$ 
+
+$\beta_{1}$ is the slope of the line
+:::
+::::
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-align: "center"
+p1
+```
+
+
+## Linear Model {style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+1 [2 3 4 5 6]{style="opacity:0.25"}
+:::
+:::
+
+
+:::: {.columns}
+::: {.column width="40%"}
+$y = Normal(\mu,\sigma)$
+
+$\mu = \alpha + \beta_{1}x + \epsilon$
+
+$y = Normal(\alpha + \beta_{1}x,\sigma)$
+
+:::
+
+::: {.column width="60%"}
+$\beta$ and $\alpha$ are estimated by minimising the non modelled error: $\epsilon$
+
+This is done with Ordinary Least Squares (OLS)
+
+OLS minimises the cummulative distance from data to the line ($\epsilon$)
+:::
+::::
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-align: "center"
+p2
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

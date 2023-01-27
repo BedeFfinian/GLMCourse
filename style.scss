@@ -1,0 +1,64 @@
+/*-- scss:defaults --*/
+
+$body-bg: #d0f0c0;
+$body-color: #2f847c;
+$link-color: #e29c45;
+$presentation-heading-color: #008b8b;
+$code-color: #d0f0c0;
+$code-block-bg: #ded9ca;
+$code-block-border-color: #000000;
+
+$Bede-light: #E0FFFF;
+$Bede-med: #abdbe3;
+$Bede-dark: #008b8b;
+
+$body-color: $Bede-dark;
+
+$code-block-font-size: 50px;
+
+$p: 80px;
+
+$font-size: 40px;
+
+/*-- scss:rules --*/
+
+.reveal .slide-logo {
+  max-height: 100px !important;
+}
+
+.reveal .footer {
+  background-color: $Bede-dark;
+  padding-top: 12px;
+  padding-bottom: 15px;
+  font-size: 0.35em !important;
+  text-align: center !important;
+  bottom: 0px !important; // makes sure there isn't any space below the footer box
+  z-index: -1 !important; // makes sure it is places behind the logo
+}
+
+.reveal .slide-number {
+  color: $link-color;
+}
+
+
+.sectionhead {
+  font-size: 1em;
+  text-align: center;
+  color: $presentation-heading-color;
+  font-family: $presentation-heading-font;
+  background-color: $body-bg;
+  margin: 1px;
+  padding: 2px 2px 2px 2px;
+  width: 120px;
+  border-left: 10px solid;
+}
+
+.blackbox {
+  color: $Bede-dark;
+  background-color: transparent;
+  margin: 1px;
+  padding: 5px 2px 5px 2px;
+  height: 205px;
+  border: 2px solid;
+}
+
