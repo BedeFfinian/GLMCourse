@@ -38,7 +38,7 @@ format:
 :::
 
 
-```{r}
+```{r Gauss}
 #| warning: false
 #| echo: false
 #| results: hide
@@ -67,7 +67,6 @@ ggplot()+
   geom_segment(aes(x=x,xend=x,y=y,yend=u),colour="red")+
   geom_point(aes(x=x,y=u),size=2,colour="grey50")+
   theme_Bede()
-
 
 
 ```
@@ -178,13 +177,14 @@ $\beta_{1}$ is the slope of the line
 p1
 ```
 
+## Continuous and All Real Numbers: Gaussian {style="font-size: 60px; font-weight: bold;"}
 
-## Linear Model {style="font-size: 60px; font-weight: bold;"}
+### Linear Model {style="font-size: 60px; font-weight: bold;"}
 
 
 ::: {.absolute top="0" left="95%"}
 ::: {.sectionhead}
-1 [2 3 4 5 6]{style="opacity:0.25"}
+[1 2]{style="opacity:0.25"} 3 [4 5 6]{style="opacity:0.25"}
 :::
 :::
 
@@ -200,11 +200,11 @@ $y = Normal(\alpha + \beta_{1}x,\sigma)$
 :::
 
 ::: {.column width="60%"}
-$\beta$ and $\alpha$ are estimated by minimising the non modelled error: $\epsilon$
+$\beta$ and $\alpha$ are estimated by minimising error: $\epsilon$
 
-This is done with Ordinary Least Squares (OLS)
+This is done with Maximum Likelihood (ML) using Least Squares
 
-OLS minimises the cummulative distance from data to the line ($\epsilon$)
+ML minimises the cummulative error ($\epsilon$)
 :::
 ::::
 
@@ -215,15 +215,236 @@ OLS minimises the cummulative distance from data to the line ($\epsilon$)
 p2
 ```
 
+## Discrete and Non-Negative Numbers: Poisson {style="font-size: 60px; font-weight: bold;"}
+
+### General (Still) Linear Model {style="font-size: 60px; font-weight: bold;"}
+
+```{r Pois}
+#| warning: false
+#| echo: false
+#| results: hide
 
 
+library(Utilities.Package)
+library(tidyverse)
+
+n=100
+a=2
+b=0.04
+x = runif(100, min = 0, max = 100)
+y1=a+b*x
+y=exp(y1)
+u<-rpois(n,lambda=y)
+
+pois1<-as_tibble(y=y,u=u,x=x) %>% 
+ggplot()+
+  geom_line(aes(x=x,y=y),linewidth=2,colour="darkcyan",alpha=0.7)+
+  geom_point(aes(x=x,y=u),size=2,colour="grey50")+
+  theme_Bede()
+
+pois2<-as_tibble(y=y,u=u,x=x) %>% 
+ggplot()+
+  geom_line(aes(x=x,y=log(y)),linewidth=2,colour="darkcyan",alpha=0.7)+
+  geom_point(aes(x=x,y=log(u)),size=2,colour="grey50")+
+  geom_segment(aes(x=x,xend=x,y=log(y),yend=log(u)),colour="red")+
+  theme_Bede()
 
 
+```
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2 3]{style="opacity:0.25"} 4 [5 6]{style="opacity:0.25"}
+:::
+:::
+
+:::: {.columns}
+::: {.column width="40%"}
+$y = Poisson(\lambda)$
+
+$\lambda = log(\mu)$
+
+$\mu = \alpha + \beta_{1}x + \epsilon$
+
+$y = Poisson(log(\alpha + \beta_{1}x))$
+:::
+
+::: {.column width="60%"}
+$y$ poisson distribution with mean $\lambda$
+
+$log(\mu)$ is "log-link" between linear exquation and $y$
+
+$\alpha$ is the intercept when $\beta_{1}x = 0$ 
+
+$\beta_{1}$ is the slope of the line
+:::
+::::
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-align: "center"
+pois1
+```
+
+## Discrete and Non-Negative Numbers: Poisson {style="font-size: 60px; font-weight: bold;"}
+
+### General (Still) Linear Model {style="font-size: 60px; font-weight: bold;"}
 
 
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2 3]{style="opacity:0.25"} 4 [5 6]{style="opacity:0.25"}
+:::
+:::
+
+:::: {.columns}
+::: {.column width="40%"}
+$y = Poisson(\lambda)$
+
+$\lambda = log(\mu)$
+
+$\mu = \alpha + \beta_{1}x + \epsilon$
+
+$y = Poisson(log(\alpha + \beta_{1}x))$
+:::
+
+::: {.column width="60%"}
+ML used to minimise $\epsilon$
+
+$log(\mu)$ is "log-link" between linear equation and $y$
+
+$\beta_{1}$ is the slope of the line
+:::
+::::
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-align: "center"
+pois2
+```
 
 
+## Discrete and Set Values: Binomial {style="font-size: 60px; font-weight: bold;"}
 
+### General (Still) Linear Model {style="font-size: 60px; font-weight: bold;"}
+
+```{r Binom}
+#| warning: false
+#| echo: false
+#| results: hide
+
+
+library(Utilities.Package)
+library(tidyverse)
+
+n<-100
+a<-1
+b<-1
+x<- seq(-4,4, length.out = 100)
+y1<-a+b*x
+y<-exp(y1)/(1+exp(y1))
+u<-rbinom(n,1,y)
+
+binom1<-as_tibble(y=y,u=u,x=x) %>% 
+ggplot()+
+  geom_line(aes(x=x,y=y),linewidth=2,colour="darkcyan",alpha=0.7)+
+  geom_point(aes(x=x,y=u),size=2,colour="grey50")+
+  theme_Bede()
+
+
+binom2<-as_tibble(y=y,u=u,x=x) %>% 
+ggplot()+
+  geom_line(aes(x=x,y=log(y/(1-y))),linewidth=2,colour="darkcyan",alpha=0.7)+
+  geom_point(aes(x=x,y=log(u/(1-u))),size=2,colour="grey50")+
+  geom_segment(aes(x=x,xend=x,y=log(y/(1-y)),yend=log(u/(1-u))),colour="red")+
+  theme_Bede()
+
+
+```
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2 3 4]{style="opacity:0.25"} 5 [6]{style="opacity:0.25"}
+:::
+:::
+
+:::: {.columns}
+::: {.column width="40%"}
+$y = Binomial(Pr)$
+
+$Pr = logit(\mu)$
+
+$\mu = \alpha + \beta_{1}x + \epsilon$
+
+$y = Binomial(logit(\alpha + \beta_{1}x))$
+:::
+
+::: {.column width="60%"}
+$y$ poisson distribution with mean $\lambda$
+
+$log(\mu)$ is "log-link" between linear equation and $y$
+
+$\alpha$ is the intercept when $\beta_{1}x = 0$ 
+
+$\beta_{1}$ is the slope of the line
+:::
+::::
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-align: "center"
+binom1
+```
+
+## Discrete and Set Values: Binomial {style="font-size: 60px; font-weight: bold;"}
+
+### General (Still) Linear Model {style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2 3 4]{style="opacity:0.25"} 5 [6]{style="opacity:0.25"}
+:::
+:::
+
+:::: {.columns}
+::: {.column width="40%"}
+$y = Binomial(Pr)$
+
+$Pr = logit(\mu)$
+
+$\mu = \alpha + \beta_{1}x + \epsilon$
+
+$y = Binomial(logit(\alpha + \beta_{1}x))$
+:::
+
+::: {.column width="60%"}
+Maximum Likelihood (ML) used to minimise $\epsilon$
+
+$logit(\mu)$ is "logit-link" between linear exquation and $y$
+
+$\beta_{1}$ is the slope of the line
+:::
+::::
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-align: "center"
+binom2
+```
+
+
+## Assumptions{style="font-size: 60px; font-weight: bold;"}
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2 3 4 5]{style="opacity:0.25"} 6
+:::
+:::
 
 
 

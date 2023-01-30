@@ -420,12 +420,13 @@
 </div>
 </div>
 
-<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="linear-model-1" class="slide level2" style="font-size: 60px; font-weight: bold;">
-<h2>Linear Model</h2>
+<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="continuous-and-all-real-numbers-gaussian-1" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Continuous and All Real Numbers: Gaussian</h2>
+<h3 style="font-size: 60px; font-weight: bold;" id="linear-model-1">Linear Model</h3>
 <div class="absolute" style="top: 0px; left: 95%; ">
 <div class="sectionhead">
-<p>1 <span style="opacity:0.25">2 3 4 5 6</span></p>
+<p><span style="opacity:0.25">1 2</span> 3 <span style="opacity:0.25">4 5 6</span></p>
 </div>
 </div>
 <div class="columns">
@@ -434,22 +435,118 @@
 <p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
 <p><span class="math inline">\(y = Normal(\alpha + \beta_{1}x,\sigma)\)</span></p>
 </div><div class="column" style="width:60%;">
-<p><span class="math inline">\(\beta\)</span> and <span class="math inline">\(\alpha\)</span> are estimated by minimising the non modelled error: <span class="math inline">\(\epsilon\)</span></p>
-<p>This is done with Ordinary Least Squares (OLS)</p>
-<p>OLS minimises the cummulative distance from data to the line (<span class="math inline">\(\epsilon\)</span>)</p>
+<p><span class="math inline">\(\beta\)</span> and <span class="math inline">\(\alpha\)</span> are estimated by minimising error: <span class="math inline">\(\epsilon\)</span></p>
+<p>This is done with Maximum Likelihood (ML) using Least Squares</p>
+<p>ML minimises the cummulative error (<span class="math inline">\(\epsilon\)</span>)</p>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="GLMs_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
-</figure>
+
+<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="discrete-and-non-negative-numbers-poisson" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Discrete and Non-Negative Numbers: Poisson</h2>
+<h3 style="font-size: 60px; font-weight: bold;" id="general-still-linear-model">General (Still) Linear Model</h3>
+<div class="cell">
+
+</div>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p><span style="opacity:0.25">1 2 3</span> 4 <span style="opacity:0.25">5 6</span></p>
 </div>
 </div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><span class="math inline">\(y = Poisson(\lambda)\)</span></p>
+<p><span class="math inline">\(\lambda = log(\mu)\)</span></p>
+<p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
+<p><span class="math inline">\(y = Poisson(log(\alpha + \beta_{1}x))\)</span></p>
+</div><div class="column" style="width:60%;">
+<p><span class="math inline">\(y\)</span> poisson distribution with mean <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math inline">\(log(\mu)\)</span> is “log-link” between linear exquation and <span class="math inline">\(y\)</span></p>
+<p><span class="math inline">\(\alpha\)</span> is the intercept when <span class="math inline">\(\beta_{1}x = 0\)</span></p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line</p>
 </div>
-<p><img src="Data/Input/Stats.png" class="slide-logo"></p>
-<div class="footer footer-default">
+</div>
+
+<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="discrete-and-non-negative-numbers-poisson-1" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Discrete and Non-Negative Numbers: Poisson</h2>
+<h3 style="font-size: 60px; font-weight: bold;" id="general-still-linear-model-1">General (Still) Linear Model</h3>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p><span style="opacity:0.25">1 2 3</span> 4 <span style="opacity:0.25">5 6</span></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><span class="math inline">\(y = Poisson(\lambda)\)</span></p>
+<p><span class="math inline">\(\lambda = log(\mu)\)</span></p>
+<p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
+<p><span class="math inline">\(y = Poisson(log(\alpha + \beta_{1}x))\)</span></p>
+</div><div class="column" style="width:60%;">
+<p>ML used to minimise <span class="math inline">\(\epsilon\)</span></p>
+<p><span class="math inline">\(log(\mu)\)</span> is “log-link” between linear equation and <span class="math inline">\(y\)</span></p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line</p>
+</div>
+</div>
+
+<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="discrete-and-set-values-binomial" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Discrete and Set Values: Binomial</h2>
+<h3 style="font-size: 60px; font-weight: bold;" id="general-still-linear-model-2">General (Still) Linear Model</h3>
+<div class="cell">
+
+</div>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p><span style="opacity:0.25">1 2 3 4</span> 5 <span style="opacity:0.25">6</span></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><span class="math inline">\(y = Binomial(Pr)\)</span></p>
+<p><span class="math inline">\(Pr = logit(\mu)\)</span></p>
+<p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
+<p><span class="math inline">\(y = Binomial(logit(\alpha + \beta_{1}x))\)</span></p>
+</div><div class="column" style="width:60%;">
+<p><span class="math inline">\(y\)</span> poisson distribution with mean <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math inline">\(log(\mu)\)</span> is “log-link” between linear equation and <span class="math inline">\(y\)</span></p>
+<p><span class="math inline">\(\alpha\)</span> is the intercept when <span class="math inline">\(\beta_{1}x = 0\)</span></p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line</p>
+</div>
+</div>
+
+<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="discrete-and-set-values-binomial-1" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Discrete and Set Values: Binomial</h2>
+<h3 style="font-size: 60px; font-weight: bold;" id="general-still-linear-model-3">General (Still) Linear Model</h3>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p><span style="opacity:0.25">1 2 3 4</span> 5 <span style="opacity:0.25">6</span></p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><span class="math inline">\(y = Binomial(Pr)\)</span></p>
+<p><span class="math inline">\(Pr = logit(\mu)\)</span></p>
+<p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
+<p><span class="math inline">\(y = Binomial(logit(\alpha + \beta_{1}x))\)</span></p>
+</div><div class="column" style="width:60%;">
+<p>Maximum Likelihood (ML) used to minimise <span class="math inline">\(\epsilon\)</span></p>
+<p><span class="math inline">\(logit(\mu)\)</span> is “logit-link” between linear exquation and <span class="math inline">\(y\)</span></p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line</p>
+</div>
+</div>
+
+<img data-src="GLMs_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="assumptions" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Assumptions</h2>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p><span style="opacity:0.25">1 2 3 4 5</span> 6</p>
+</div>
+</div>
+
+<img src="Data/Input/Stats.png" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="www.bedeffinianrowedavies.com">https://www.BedeFfinianRoweDavies.com</a></p>
 </div>
 </section>
