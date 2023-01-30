@@ -355,7 +355,7 @@ n<-100
 a<-1
 b<-1
 xbinom<- seq(-4,4, length.out = 100)
-y1<-a+b*x
+y1<-a+b*xbinom
 ybinom<-exp(y1)/(1+exp(y1))
 ubinom<-rbinom(n,1,ybinom)
 
