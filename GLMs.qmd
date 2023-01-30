@@ -202,7 +202,7 @@ $y = Normal(\alpha + \beta_{1}x,\sigma)$
 ::: {.column width="60%"}
 $\beta$ and $\alpha$ are estimated by minimising error: $\epsilon$
 
-This is done with Maximum Likelihood (ML) using Least Squares
+Maximum Likelihood (ML) using Least Squares
 
 ML minimises the cummulative error ($\epsilon$)
 :::
