@@ -480,31 +480,45 @@ library(patchwork)
 
 ::: {.incremental}
 
-- [Gaussian]{style="font-size: 50px;"}
+:::: {.columns}
+::: {.column width="50%"}
+- [GLM]{style="font-size: 50px;"}
 
-    - [Linear Relationship between $x$ and $y$]{style="font-size: 40px;" }
-        
     - [Independence of Samples]{style="font-size: 40px;" }
 
     - [Homoscedasticity of Residuals]{style="font-size: 40px;" }
 
     - [Normality of Residuals]{style="font-size: 40px;" }
+:::
+::: {.column width="50%"}
+- [Gaussian]{style="font-size: 50px;"}
 
+    - [Response Variable is Gaussian (Continuous Any Real Value)]{style="font-size: 40px;" }
+
+    - [Linear Relationship between $x$ and $y$]{style="font-size: 40px;" }
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
 - [Poisson]{style="font-size: 50px;"}
 
-    - [allow the prediction of a response variable by independent variable(s)]{style="font-size: 40px;" }
-    
-    - [Equivalent to Correlation, t-tests, ANOVA, ANCOVA etc.]{style="font-size: 40px;" }
+    - [Response Variable is Poisson (Counts per unit time or space)]{style="font-size: 40px;" }
 
+    - [Mean is Equal to the Variance]{style="font-size: 40px;" }
+
+    - [$log(\lambda)$ has linear relationship with x]{style="font-size: 40px;" }
+:::
+::: {.column width="50%"}
 - [Binomial]{style="font-size: 50px;"}
 
-    - [Higher Flexibilty When Understood]{style="font-size: 40px;"}
+    - [Response Variable is Binomial (two or more possible values)]{style="font-size: 40px;" }
+    
+    - [Independence of Samples]{style="font-size: 40px;" }
 
-    - [Can Model Complex Relationships]{style="font-size: 40px;"}
-
-    - [Can be used for Prediction or Description (or both)]{style="font-size: 40px;"}
-
+    - [$logit(\mu)$ has linear relationship with x]{style="font-size: 40px;" }
+:::
+::::
 :::
 
-
-
+---
