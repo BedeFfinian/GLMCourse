@@ -339,6 +339,35 @@
 <div class="absolute" style="left: 28%; bottom: 14%; ">
 <p><img data-src="Data/Input/Example_Plot.png" height="850"></p>
 </div>
+</section>
+<section id="nomenclature-conventions" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Nomenclature Conventions</h2>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p>1 <span style="opacity:0.25">2 3 4 5 6</span></p>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment"><p><span style="font-size: 50px;">Response Variable (Dependent Variable)</span></p>
+<ul>
+<li class="fragment"><span style="font-size: 40px;">What we are interested in or we have measured (y)</span></li>
+</ul></li>
+<li class="fragment"><p><span style="font-size: 50px;">Predictor Variable/Fixed Effect (Independent Variable)</span></p>
+<ul>
+<li class="fragment"><span style="font-size: 40px;">Additional data we think changes our value of interest (x)</span></li>
+</ul></li>
+<li class="fragment"><p><span style="font-size: 50px;">Effect</span></p>
+<ul>
+<li class="fragment"><span style="font-size: 40px;">How much y changes with a relative change in x</span></li>
+</ul></li>
+<li class="fragment"><p><span style="font-size: 50px;">Population vs Sample</span></p>
+<ul>
+<li class="fragment"><p><span style="font-size: 40px;">Popultation is everything</span></p></li>
+<li class="fragment"><p><span style="font-size: 40px;">Sample is the group we measured (or sampled) from the population</span></p></li>
+</ul></li>
+</ul>
+</div>
 <div class="cell">
 
 </div>
@@ -358,7 +387,7 @@
 </ul></li>
 <li class="fragment"><p><span style="font-size: 50px;">What is a General Linear Model (GLM)?</span></p>
 <ul>
-<li class="fragment"><p><span style="font-size: 40px;">allow the prediction of a response variable by independent variable(s)</span></p></li>
+<li class="fragment"><p><span style="font-size: 40px;">allow the prediction of a response variable by predictor variable(s)</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;">Equivalent to Correlation, t-tests, ANOVA, ANCOVA etc.</span></p></li>
 </ul></li>
 <li class="fragment"><p><span style="font-size: 50px;">What is a GLM?</span></p>
@@ -374,8 +403,8 @@
 </ul>
 </div>
 </section>
-<section id="data-types" class="slide level2" style="font-size: 60px; font-weight: bold;">
-<h2>Data Types</h2>
+<section id="data-types-population" class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Data Types (Population)</h2>
 <div class="absolute" style="top: 0px; left: 95%; ">
 <div class="sectionhead">
 <p><span style="opacity:0.25">1</span> 2 <span style="opacity:0.25">3 4 5 6</span></p>
@@ -390,6 +419,7 @@
 <li class="fragment"><p><span style="font-size: 40px;">Continuous and Bound Between Range: Beta</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;">Discrete and all Non-Negative Values: Poisson</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;">Discrete and Set Upper Bound Values: Binomial</span></p></li>
+<li class="fragment"><p><span style="font-size: 40px;">All relate to Population not Sample</span></p></li>
 </ul></li>
 <li class="fragment"><p><span style="font-size: 50px;">Predictor/Fixed Effects (Dependent Variables):</span></p>
 <ul>
@@ -567,9 +597,9 @@
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><p><span style="font-size: 50px;">Gaussian</span></p>
+<li class="fragment"><p><span style="font-size: 50px;">Gaussian (Continuous Any Real Value)</span></p>
 <ul>
-<li class="fragment"><p><span style="font-size: 40px;">Response Variable is Gaussian (Continuous Any Real Value)</span></p></li>
+<li class="fragment"><p><span style="font-size: 40px;">Response Variable is a sample from Gaussian population</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;">Linear Relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></span></p></li>
 </ul></li>
 </ul>
@@ -578,24 +608,34 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><p><span style="font-size: 50px;">Poisson</span></p>
+<li class="fragment"><p><span style="font-size: 50px;">Poisson (Counts per unit time or space)</span></p>
 <ul>
-<li class="fragment"><p><span style="font-size: 40px;">Response Variable is Poisson (Counts per unit time or space)</span></p></li>
+<li class="fragment"><p><span style="font-size: 40px;">Response Variable is a sample from Poisson population</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;">Mean is Equal to the Variance</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;"><span class="math inline">\(log(\lambda)\)</span> has linear relationship with x</span></p></li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><p><span style="font-size: 50px;">Binomial</span></p>
+<li class="fragment"><p><span style="font-size: 50px;">Binomial (two or more possible values)</span></p>
 <ul>
-<li class="fragment"><p><span style="font-size: 40px;">Response Variable is Binomial (two or more possible values)</span></p></li>
-<li class="fragment"><p><span style="font-size: 40px;">Independence of Samples</span></p></li>
+<li class="fragment"><p><span style="font-size: 40px;">Response Variable is a sample from Binomial population</span></p></li>
 <li class="fragment"><p><span style="font-size: 40px;"><span class="math inline">\(logit(\mu)\)</span> has linear relationship with x</span></p></li>
 </ul></li>
 </ul>
 </div>
 </div>
+</div>
+</section>
+<section id="lets-give-some-of-these-a-go-in-practice." class="slide level2" style="font-size: 60px; font-weight: bold;">
+<h2>Let’s give some of these a go in Practice…….</h2>
+<div class="absolute" style="top: 0px; left: 95%; ">
+<div class="sectionhead">
+<p><span style="opacity:0.25">1 2 3 4 5</span> 6</p>
+</div>
+</div>
+<div class="absolute" style="left: 28%; bottom: 14%; ">
+<p><img data-src="Data/Input/R_logo.png" height="850"></p>
 </div>
 </section>
 <section class="slide level2">

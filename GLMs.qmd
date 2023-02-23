@@ -37,6 +37,38 @@ format:
 ![](Data/Input/Example_Plot.png){height="850"}
 :::
 
+## Nomenclature Conventions {style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+1 [2 3 4 5 6]{style="opacity:0.25"}
+:::
+:::
+
+::: {.incremental}
+
+- [Response Variable (Dependent Variable)]{style="font-size: 50px;"}
+
+    - [What we are interested in or we have measured (y)]{style="font-size: 40px;" }
+    
+- [Predictor Variable/Fixed Effect (Independent Variable)]{style="font-size: 50px;"}
+
+    - [Additional data we think changes our value of interest (x)]{style="font-size: 40px;" }
+
+- [Effect]{style="font-size: 50px;"}
+
+    - [How much y changes with a relative change in x]{style="font-size: 40px;" }
+    
+    
+- [Population vs Sample]{style="font-size: 50px;"}
+
+    - [Popultation is everything]{style="font-size: 40px;" }
+    
+    - [Sample is the group we measured (or sampled) from the population]{style="font-size: 40px;" }
+
+:::
+
 
 ```{r Gauss}
 #| warning: false
@@ -94,7 +126,7 @@ ResidualsGaus<-data.frame(y=yGaus,u=uGaus,x=xGaus) %>%
     
 - [What is a General Linear Model (GLM)?]{style="font-size: 50px;"}
 
-    - [allow the prediction of a response variable by independent variable(s)]{style="font-size: 40px;" }
+    - [allow the prediction of a response variable by predictor variable(s)]{style="font-size: 40px;" }
     
     - [Equivalent to Correlation, t-tests, ANOVA, ANCOVA etc.]{style="font-size: 40px;" }
 
@@ -112,7 +144,7 @@ ResidualsGaus<-data.frame(y=yGaus,u=uGaus,x=xGaus) %>%
 
 :::
 
-## Data Types {style="font-size: 60px; font-weight: bold;"}
+## Data Types (Population){style="font-size: 60px; font-weight: bold;"}
 
 
 ::: {.absolute top="0" left="95%"}
@@ -134,6 +166,8 @@ ResidualsGaus<-data.frame(y=yGaus,u=uGaus,x=xGaus) %>%
     - [Discrete and all Non-Negative Values: Poisson]{style="font-size: 40px;"}
    
     - [Discrete and Set Upper Bound Values: Binomial]{style="font-size: 40px;"}
+
+    - [All relate to Population not Sample]{style="font-size: 40px;"}
 
 - [Predictor/Fixed Effects (Dependent Variables):]{style="font-size: 50px;"}
 
@@ -491,9 +525,9 @@ library(patchwork)
     - [Normality of Residuals]{style="font-size: 40px;" }
 :::
 ::: {.column width="50%"}
-- [Gaussian]{style="font-size: 50px;"}
+- [Gaussian (Continuous Any Real Value)]{style="font-size: 50px;"}
 
-    - [Response Variable is Gaussian (Continuous Any Real Value)]{style="font-size: 40px;" }
+    - [Response Variable is a sample from Gaussian population]{style="font-size: 40px;" }
 
     - [Linear Relationship between $x$ and $y$]{style="font-size: 40px;" }
 :::
@@ -501,24 +535,34 @@ library(patchwork)
 
 :::: {.columns}
 ::: {.column width="50%"}
-- [Poisson]{style="font-size: 50px;"}
+- [Poisson (Counts per unit time or space)]{style="font-size: 50px;"}
 
-    - [Response Variable is Poisson (Counts per unit time or space)]{style="font-size: 40px;" }
+    - [Response Variable is a sample from Poisson population]{style="font-size: 40px;" }
 
     - [Mean is Equal to the Variance]{style="font-size: 40px;" }
 
     - [$log(\lambda)$ has linear relationship with x]{style="font-size: 40px;" }
 :::
 ::: {.column width="50%"}
-- [Binomial]{style="font-size: 50px;"}
+- [Binomial (two or more possible values)]{style="font-size: 50px;"}
 
-    - [Response Variable is Binomial (two or more possible values)]{style="font-size: 40px;" }
+    - [Response Variable is a sample from Binomial population]{style="font-size: 40px;" }
     
-    - [Independence of Samples]{style="font-size: 40px;" }
-
     - [$logit(\mu)$ has linear relationship with x]{style="font-size: 40px;" }
 :::
 ::::
 :::
 
----
+
+## Let's give some of these a go in Practice....... {style="font-size: 60px; font-weight: bold;"}
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1 2 3 4 5]{style="opacity:0.25"} 6
+:::
+:::
+
+::: {.absolute bottom="14%" left="28%"}
+![](Data/Input/R_logo.png){height="850"}
+:::
+
