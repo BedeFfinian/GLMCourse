@@ -313,7 +313,7 @@ $\lambda = log(\mu)$
 
 $\mu = \alpha + \beta_{1}x + \epsilon$
 
-$y = Poisson(log(\alpha + \beta_{1}x))$
+$y = Poisson(e^{(\alpha + \beta_{1}x)})$
 :::
 
 ::: {.column width="60%"}
@@ -353,7 +353,7 @@ $\lambda = log(\mu)$
 
 $\mu = \alpha + \beta_{1}x + \epsilon$
 
-$y = Poisson(log(\alpha + \beta_{1}x))$
+$y = Poisson(e^{(\alpha + \beta_{1}x)})$
 :::
 
 ::: {.column width="60%"}
@@ -425,13 +425,13 @@ $Pr = logit(\mu)$
 
 $\mu = \alpha + \beta_{1}x + \epsilon$
 
-$y = Binomial(logit(\alpha + \beta_{1}x))$
+$y = Binomial(logit^{-1}(\alpha + \beta_{1}x))$
 :::
 
 ::: {.column width="60%"}
 $y$ poisson distribution with mean $\lambda$
 
-$log(\mu)$ is "log-link" between linear equation and $y$
+$logit(\mu)$ is "log-link" between linear equation and $y$
 
 $\alpha$ is the intercept when $\beta_{1}x = 0$ 
 
@@ -465,7 +465,7 @@ $Pr = logit(\mu)$
 
 $\mu = \alpha + \beta_{1}x + \epsilon$
 
-$y = Binomial(logit(\alpha + \beta_{1}x))$
+$y = Binomial(logit^{-1}(\alpha + \beta_{1}x))$
 :::
 
 ::: {.column width="60%"}
