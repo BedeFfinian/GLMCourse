@@ -533,15 +533,15 @@
 </div>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p><span class="math inline">\(y = Binomial(Pr)\)</span></p>
+<p><span class="math inline">\(y = Binomial(N, Pr)\)</span></p>
 <p><span class="math inline">\(Pr = logit(\mu)\)</span></p>
 <p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
 <p><span class="math inline">\(y = Binomial(logit^{-1}(\alpha + \beta_{1}x))\)</span></p>
 </div><div class="column" style="width:60%;">
-<p><span class="math inline">\(y\)</span> poisson distribution with mean <span class="math inline">\(\lambda\)</span></p>
+<p><span class="math inline">\(y\)</span> binomial distribution with count <span class="math inline">\(Pr\)</span> if total <span class="math inline">\(N\)</span></p>
 <p><span class="math inline">\(logit(\mu)\)</span> is “log-link” between linear equation and <span class="math inline">\(y\)</span></p>
 <p><span class="math inline">\(\alpha\)</span> is the intercept when <span class="math inline">\(\beta_{1}x = 0\)</span></p>
-<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line</p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line on the logit scale (“log-odds”)</p>
 </div>
 </div>
 
@@ -556,14 +556,14 @@
 </div>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p><span class="math inline">\(y = Binomial(Pr)\)</span></p>
+<p><span class="math inline">\(y = Binomial(N, Pr)\)</span></p>
 <p><span class="math inline">\(Pr = logit(\mu)\)</span></p>
 <p><span class="math inline">\(\mu = \alpha + \beta_{1}x + \epsilon\)</span></p>
 <p><span class="math inline">\(y = Binomial(logit^{-1}(\alpha + \beta_{1}x))\)</span></p>
 </div><div class="column" style="width:60%;">
 <p>Maximum Likelihood (ML) used to minimise <span class="math inline">\(\epsilon\)</span></p>
 <p><span class="math inline">\(logit(\mu)\)</span> is “logit-link” between linear exquation and <span class="math inline">\(y\)</span></p>
-<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line</p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the slope of the line on the logit scale (“log-odds”)</p>
 </div>
 </div>
 

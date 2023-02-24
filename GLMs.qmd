@@ -406,7 +406,8 @@ ggplot()+
   geom_line(aes(x=x,y=y1),linewidth=2,colour="darkcyan",alpha=0.7)+
   geom_point(aes(x=x,y=y),size=2,colour="grey50")+
   geom_segment(aes(x=x,xend=x,y=y1,yend=y),colour="red")+
-  theme_Bede()
+  theme_Bede()+
+  labs(y="logit(y)")
 
 
 ```
@@ -419,7 +420,7 @@ ggplot()+
 
 :::: {.columns}
 ::: {.column width="40%"}
-$y = Binomial(Pr)$
+$y = Binomial(N, Pr)$
 
 $Pr = logit(\mu)$
 
@@ -429,13 +430,13 @@ $y = Binomial(logit^{-1}(\alpha + \beta_{1}x))$
 :::
 
 ::: {.column width="60%"}
-$y$ poisson distribution with mean $\lambda$
+$y$ binomial distribution with count $Pr$ if total $N$
 
 $logit(\mu)$ is "log-link" between linear equation and $y$
 
 $\alpha$ is the intercept when $\beta_{1}x = 0$ 
 
-$\beta_{1}$ is the slope of the line
+$\beta_{1}$ is the slope of the line on the logit scale ("log-odds")
 :::
 ::::
 
@@ -459,7 +460,7 @@ binom1
 
 :::: {.columns}
 ::: {.column width="40%"}
-$y = Binomial(Pr)$
+$y = Binomial(N, Pr)$
 
 $Pr = logit(\mu)$
 
@@ -473,7 +474,7 @@ Maximum Likelihood (ML) used to minimise $\epsilon$
 
 $logit(\mu)$ is "logit-link" between linear exquation and $y$
 
-$\beta_{1}$ is the slope of the line
+$\beta_{1}$ is the slope of the line on the logit scale ("log-odds")
 :::
 ::::
 
