@@ -155,7 +155,7 @@ ResidualsGaus<-data.frame(y=yGaus,u=uGaus,x=xGaus) %>%
 
 ::: {.incremental}
 
-- [Response Data Types (Independent Variable):]{style="font-size: 50px;left: 500px;"}
+- [Response Data Types (Dependent Variable):]{style="font-size: 50px;left: 500px;"}
 
     - [Continuous and All Real Numbers: Gaussian (Normal)]{style="font-size: 40px;"}
 
@@ -169,7 +169,7 @@ ResidualsGaus<-data.frame(y=yGaus,u=uGaus,x=xGaus) %>%
 
     - [All relate to Population not Sample]{style="font-size: 40px;"}
 
-- [Predictor/Fixed Effects (Dependent Variables):]{style="font-size: 50px;"}
+- [Predictor/Fixed Effects (Independent Variables):]{style="font-size: 50px;"}
 
     - [Continuous]{style="font-size: 40px;"}
 
@@ -319,7 +319,7 @@ $y = Poisson(e^{(\alpha + \beta_{1}x)})$
 ::: {.column width="60%"}
 $y$ poisson distribution with mean $\lambda$
 
-$log(\mu)$ is "log-link" between linear exquation and $y$
+$log(\mu)$ is "log-link" between linear equation and $y$
 
 $\alpha$ is the intercept when $\beta_{1}x = 0$ 
 

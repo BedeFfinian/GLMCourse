@@ -150,8 +150,8 @@ summary(lm2.1)
 # We can re-use some of our code from the intro for appearance and colours
 
 ggplot(penguins_noNAs)+
-  geom_boxplot(aes(x=sex,y=flipper_length_mm,fill=species))+
-  scale_fill_manual(values=c("darkcyan","darkorange","grey30"))+
+  geom_boxplot(aes(x=species,y=flipper_length_mm,fill=sex))+
+  scale_fill_manual(values=c("darkcyan","darkorange"))+
   labs(x="Sex",y="Response Variable (Flipper Length (mm))")+
   theme_classic()
 
@@ -160,24 +160,146 @@ ggplot(penguins_noNAs)+
 # to do this we make simulated raw data with this same predictor variables in
 # we then use the model to predict the response variable based on those predictor variables
 
-# Therefore, we make a data set with sex and species 
-# the model then predicts the average Flipper length in mm based on those species and sexes.
+# Therefore, we make a data set with just sex and species (be careful of spelling and capitalisation, R wants it identical)
+# the model then predicts the average Flipper length in mm based on those species and sexes. 
+# We can also tell the Predict function to predict error (Standard Error here)
 
 
 NewData<-expand_grid(sex=c("male","female"),
                      species=c("Adelie","Chinstrap","Gentoo"))
 
-NewData$response<-predict(lm2.1,NewData)
+Pred<-predict(lm2.1,NewData,se.fit=TRUE)
+
+NewData$response<-Pred$fit
+
+NewData$se.fit<-Pred$se.fit
 
 
 ggplot(NewData)+
-  geom_point(aes(x=sex,y=response,fill=species))+
-  scale_fill_manual(values=c("darkcyan","darkorange","grey30"))+
+  geom_point(aes(x=species,y=response,colour=sex),
+             position=position_dodge(0.8))+
+  geom_errorbar(aes(x=species,ymax=response+se.fit,
+                    ymin=response-se.fit,colour=sex),
+                width=0.1,
+                position=position_dodge(0.8))+
+  scale_colour_manual(values=c("darkcyan","darkorange"))+
   labs(x="Sex",y="Response Variable (Flipper Length (mm))")+
   theme_classic()
 
 
 
+# Okay that is what we do with linear models of categorical factors
+# But what if we want to see the relationship between flipper_length_mm and bill_length_mm
+# But we know there are species differences and sexual differences in flipper length
+# As Males always tend to be larger lets just assess species differences in their flipper to bill relationship
+
+
+# Lets plot the raw data first 
+
+
+ggplot(penguins_noNAs)+
+  geom_point(aes(x=bill_length_mm,y=flipper_length_mm,colour=species))+
+  scale_colour_manual(values=c("darkcyan","darkorange","grey30"))+
+  labs(x="Bill Length (mm)",y="Flipper Length (mm)")+
+  theme_classic()
+
+
+# We can see from the raw data that we will expect to find some strong linear relationships
+
+lm3.1<-lm(flipper_length_mm~species*bill_length_mm,data=penguins_noNAs)
+
+check_model(lm3.1)
+
+summary(lm3.1)
+
+# As we hypothesised before modelling that there would be different bill to flipper relationships between species
+# The interaction model follows our scientific assumptions
+# Therefore, it would be incorrect to use lower complexity models (without the interactoin for example)
+
+# To predict again we want to create lines for each species
+# To do this we want to create fake bill length data over the same range for each species
+
+# Here we will use the seq() function that creates a sequence of values from your first number to your last number 
+# And you can chose the length of the vector it creates or the distance between each individual value
+
+
+NewData_<-expand_grid(bill_length_mm=seq(from=min(penguins_noNAs$bill_length_mm),
+                                        to=max(penguins_noNAs$bill_length_mm),
+                                        length.out=1000),
+                     species=c("Adelie","Chinstrap","Gentoo"))
+
+# As the different species wont be across all of these bill length ranges 
+# we should also remove values outside of each species range
+
+Gentoo_Range<-penguins_noNAs %>% 
+  filter(species=="Gentoo") %>% 
+  summarise(min=min(bill_length_mm),
+            max=max(bill_length_mm))
+
+Adelie_Range<-penguins_noNAs %>% 
+  filter(species=="Adelie") %>% 
+  summarise(min=min(bill_length_mm),
+            max=max(bill_length_mm))
+
+Chinstrap_Range<-penguins_noNAs %>% 
+  filter(species=="Chinstrap") %>% 
+  summarise(min=min(bill_length_mm),
+            max=max(bill_length_mm))
+
+
+NewData_2<-NewData_ %>% 
+  mutate(Range=case_when(species=="Gentoo" &
+                              bill_length_mm>=Gentoo_Range$min &
+                              bill_length_mm<=Gentoo_Range$max~"Good",
+                         species=="Adelie" &
+                           bill_length_mm>=Adelie_Range$min &
+                           bill_length_mm<=Adelie_Range$max~"Good",
+                         species=="Chinstrap" &
+                           bill_length_mm>=Chinstrap_Range$min &
+                           bill_length_mm<=Chinstrap_Range$max~"Good"
+  )) %>% 
+  filter(!Range%in%NA) %>% 
+  select(-Range)
+
+# As we didnt create a case when for outside of the good range then they will be NAs and we can filter them out
+# Then we remove the created Range column
+
+Pred_2<-predict(lm3.1,NewData_2,se.fit=TRUE)
+
+NewData_2$response<-Pred_2$fit
+
+NewData_2$se.fit<-Pred_2$se.fit
+
+# So now we have many data points that can be used to draw the linear model outputs
+
+ggplot()+
+  geom_ribbon(data=NewData_2,mapping=aes(x=bill_length_mm,ymax=response+se.fit,
+                                                 ymin=response-se.fit,fill=species),
+              alpha=0.4)+
+  geom_line(data=NewData_2,mapping=aes(x=bill_length_mm,y=response,colour=species),
+             alpha=0.4)+
+  scale_color_manual(values=c("darkcyan","darkorange","grey30"))+
+  scale_fill_manual(values=c("darkcyan","darkorange","grey30"))+
+  labs(x="Bill Length (mm)",y="Response Variable (Flipper Length (mm))")+
+  theme_classic()
+
+
+# This looks good but lets maybe add the raw data values onto the same figure as the model outputs
+
+ggplot()+
+  geom_point(data=penguins_noNAs,mapping = aes(x=bill_length_mm,
+                                               y=flipper_length_mm,
+                                               colour=species),
+             alpha=0.4,size=0.8)+
+  geom_ribbon(data=NewData_2,mapping=aes(x=bill_length_mm,ymax=response+se.fit,
+                                         ymin=response-se.fit,fill=species),
+              alpha=0.4)+
+  geom_line(data=NewData_2,mapping=aes(x=bill_length_mm,y=response,colour=species),
+            alpha=0.4)+
+  scale_color_manual(values=c("darkcyan","darkorange","grey30"))+
+  scale_fill_manual(values=c("darkcyan","darkorange","grey30"))+
+  labs(x="Bill Length (mm)",y="Response Variable (Flipper Length (mm))")+
+  theme_classic()
 
 
 
