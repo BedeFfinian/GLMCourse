@@ -1,0 +1,180 @@
+---
+title: "Poisson GLMs in R"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(performance)
+```
+
+Okay now we know the general method for applying models
+The method for applying a poisson model follows the same methods
+and uses the same diagnostic methods
+
+# Preliminary Data Exploration
+
+We will download the data set warpbreaks
+
+```{r}
+data("warpbreaks")
+```
+
+This data has the count of the number of breaks across types of wool and tension
+We will look at the how wool type and tension effect the number of breaks 
+Again first we will summarise the data and also visualise it, often the best way to find issues/mistakes
+
+```{r}
+summary(warpbreaks)
+```
+
+This tells us there are two types and three tensions
+
+```{r}
+
+ggplot()+
+  geom_boxplot(warpbreaks,mapping=aes(x=tension,y=breaks,colour=wool))+
+  scale_colour_manual(values=c("darkcyan","darkorange"))+
+  labs(x="Tensions",y="Wool Breaks")+
+  theme_classic()
+
+```
+
+# Modelling
+
+This seems to show different breaks across wools and tensions
+
+Thus we want to analyse with interaction term 
+
+```{r}
+glm1.1<-glm(breaks~tension*wool,warpbreaks,family=poisson)
+
+check_model(glm1.1)
+```
+
+```{r}
+summary(glm1.1)
+```
+
+We can see some significant differences
+lets plot them, again simulate data then predict
+
+```{r}
+NewData<-expand_grid(wool=c("A","B"),
+                     tension=c("L","M","H"))
+
+Pred<-predict(glm1.1,NewData,se.fit=TRUE,"response")
+
+NewData$response<-Pred$fit
+
+NewData$se.fit<-Pred$se.fit
+
+  ggplot(NewData)+
+  geom_point(aes(x=tension,y=response,colour=wool),
+             position=position_dodge(0.8))+
+  geom_errorbar(aes(x=tension,ymax=response+se.fit,
+                    ymin=response-se.fit,colour=wool),
+                width=0.1,
+                position=position_dodge(0.8))+
+  scale_colour_manual(values=c("darkcyan","darkorange"))+
+  labs(x="Tension",y="Response Variable (Number of Breaks)")+
+  theme_classic()
+```
+
+We have tension which is an ordered factor but r orders things alphabetically so we can tell r the order is L M H
+
+```{r}
+NewData %>% 
+  mutate(tension=factor(tension,levels=c("L","M","H"))) %>% 
+ggplot()+
+  geom_point(aes(x=tension,y=response,colour=wool),
+             position=position_dodge(0.8))+
+  geom_errorbar(aes(x=tension,ymax=response+se.fit,
+                    ymin=response-se.fit,colour=wool),
+                width=0.1,
+                position=position_dodge(0.8))+
+  scale_colour_manual(values=c("darkcyan","darkorange"))+
+  labs(x="Tension",y="Response Variable (Number of Breaks)")+
+  theme_classic()
+```
+
+# Seatbelts 
+
+We will now look at another df that is built-in to r
+
+```{r}
+data(Seatbelts)
+
+summary(Seatbelts)
+```
+
+It is a 'time-series' type of dataframe so we convert it
+
+```{r}
+#install.packages("timetk")
+library(timetk)
+
+seatbelts_df<-tk_tbl(Seatbelts) %>% 
+  rownames_to_column("MonthsN") %>% 
+  mutate(law=as.factor(law))
+```
+
+This gives us the number of traffic deaths over time in UK.
+
+
+```{r}
+
+ggplot(seatbelts_df)+
+  geom_boxplot(aes(x=law,y=DriversKilled))+
+  labs(x="Seatbelt Law",y="Number of Driver Deaths")+
+  theme_classic()
+
+ggplot(seatbelts_df)+
+  geom_point(aes(x=drivers,y=DriversKilled))+
+  labs(x="Number of Drivers",y="Number of Driver Deaths")+
+  theme_classic()
+
+```
+
+There seems to be some clear relationships between these variables.
+
+We will see if the number of drivers as well as the occurrence of seatbelt laws effects the number of drivers
+
+```{r}
+glm2.1<-glm(DriversKilled~drivers*law,data=seatbelts_df,family=poisson)
+
+check_model(glm2.1)
+
+summary(glm2.1)
+```
+
+This shows some significant results but lets plot the model outputs to really understand what the model shows.
+
+```{r}
+
+NewData_Seatbelts<-data.frame(law=as.factor(seatbelts_df$law),
+                               drivers=seatbelts_df$drivers)
+
+
+Pred_Seat<-predict(glm2.1,NewData_Seatbelts,se.fit=TRUE,"response")
+
+NewData_Seatbelts$response<-Pred_Seat$fit
+
+NewData_Seatbelts$se.fit<-Pred_Seat$se.fit
+
+NewData_Seatbelts %>%  
+ggplot()+
+  geom_ribbon(aes(x=drivers,ymax=response+se.fit,
+                  ymin=response-se.fit,fill=law),
+              alpha=0.6)+
+  geom_line(aes(x=drivers,y=response,
+                colour=law))+
+  scale_colour_manual("Seatbelt Law",values=c("darkcyan","darkorange"))+
+  scale_fill_manual("Seatbelt Law",values=c("darkcyan","darkorange"))+
+  labs(x="Number of Drivers",y="Response Variable (Number of Driver Deaths)")+
+  theme_classic()
+
+```
+
+This shows an interesting results that, while there were less drivers during seatbelt laws the rate of deaths was higher (steeper line). This is only a small subset of UK data and may be more nuanced so require more complicated statistics to fully understand the complete picture.
+

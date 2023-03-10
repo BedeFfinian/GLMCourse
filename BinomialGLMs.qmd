@@ -1,0 +1,163 @@
+---
+title: "Binomial GLMs in R"
+format: html
+---
+
+Binomial variables are counts where there is a known upper limit
+The simplest example of which is binary situation 
+0 or 1, a coin flip, success or failure
+This type of model is called Bernoulli or Logistic regression
+in r it is a binomial() model.
+
+```{r}
+library(performance)
+library(tidyverse)
+
+#install.packages("yarrr")
+library(yarrr)
+
+data(diamonds)
+summary(diamonds)
+```
+
+We are gunna create a binomial factor to model diamond values when they are above 190
+
+```{r}
+diamonds$binary<-ifelse(diamonds$value>190,1,0)
+```
+
+We will use all the values we have available to model value
+
+```{r}
+glm3.1 <- glm(binary ~ weight + clarity + color,
+                   data = diamonds,
+                   family = binomial)
+
+
+check_model(glm3.1)
+
+summary(glm3.1)
+```
+
+The model looks good, but lets plot the model outputs
+
+
+First lets predict values assuming certain values are 'average
+
+```{r}
+NewData.weight<-expand_grid(weight=seq(5,15,length.out=100),
+                     clarity=mean(diamonds$clarity),
+                     color=mean(diamonds$color))
+
+Pred<-predict(glm3.1,NewData.weight,se.fit=TRUE,"response")
+
+NewData.weight$response<-Pred$fit
+
+NewData.weight$se.fit<-Pred$se.fit
+
+
+
+ggplot(NewData.weight)+
+  geom_ribbon(aes(x=weight,ymax=response+se.fit,
+                  ymin=response-se.fit),
+              alpha=0.5,fill="darkcyan")+
+  geom_line(aes(x=weight,y=response))+
+  theme_classic()+
+  labs(y="Probability of Value over 190",
+       x="Weight of Diamond")
+```
+
+Lets try with different clarities but average weight and color
+
+```{r}
+NewData.clarity<-expand_grid(weight=mean(diamonds$weight),
+                            clarity=seq(0.4,1.5,length.out=100),
+                            color=mean(diamonds$color))
+
+Pred<-predict(glm3.1,NewData.clarity,se.fit=TRUE,"response")
+
+NewData.clarity$response<-Pred$fit
+
+NewData.clarity$se.fit<-Pred$se.fit
+
+
+
+ggplot(NewData.clarity)+
+  geom_ribbon(aes(x=clarity,ymax=response+se.fit,
+                  ymin=response-se.fit),
+              alpha=0.5,fill="darkcyan")+
+  geom_line(aes(x=clarity,y=response))+
+  theme_classic()+
+  labs(y="Probability of Value over 190",
+       x="Clarity of Diamond")
+```
+
+Finally lets look at colour, given average weight and clarity
+
+```{r}
+NewData.color<-expand_grid(weight=mean(diamonds$weight),
+                            clarity=mean(diamonds$clarity),
+                            color=seq(2,8,by=1))
+
+Pred<-predict(glm3.1,NewData.color,se.fit=TRUE,"response")
+
+NewData.color$response<-Pred$fit
+
+NewData.color$se.fit<-Pred$se.fit
+
+
+ggplot(NewData.color)+
+  geom_ribbon(aes(x=color,ymax=response+se.fit,
+                  ymin=response-se.fit),
+              alpha=0.5,fill="darkcyan")+
+  geom_line(aes(x=color,y=response))+
+  theme_classic()+
+  labs(y="Probability of Value over 190",
+       x="Color of Diamond")
+```
+
+Lets plot all our factors in one plot
+
+```{r}
+NewData<-expand_grid(weight=seq(5,15,length.out=100),
+                           clarity=seq(0.4,1.5,length.out=100),
+                           color=seq(2,8,by=1))
+
+Pred<-predict(glm3.1,NewData,se.fit=TRUE,"response")
+
+NewData$response<-Pred$fit
+
+NewData$se.fit<-Pred$se.fit
+
+ggplot(NewData)+
+  geom_tile(aes(x=weight,y=clarity,
+                fill=response,
+                alpha=se.fit))+
+  scale_fill_gradient2(low="darkcyan",mid="white",high="red",midpoint=0.5)+
+  facet_wrap(~color)+
+  theme_classic()+
+  labs(fill="Probability of Value over 190",
+       alpha="Uncertainty (Standard Error)")
+```
+
+Lets add our raw data to the plot
+
+```{r}
+ggplot(NewData)+
+  geom_tile(aes(x=weight,y=clarity,
+                fill=response,
+                alpha=se.fit))+
+  scale_fill_gradient2(low="darkcyan",mid="white",high="red",midpoint=0.5)+
+  geom_point(data = diamonds,mapping=aes(x=weight,y=clarity,colour=value),size=0.7)+
+  scale_colour_gradient2(low="darkcyan",mid="white",high="red",midpoint=190)+
+  facet_wrap(~color)+
+  theme_classic()+
+  labs(fill="Probability of Value over 190 Shading",
+       colour="Raw value of Diamonds Points",
+       alpha="Uncertainty (Standard Error)")
+```
+
+
+
+
+
