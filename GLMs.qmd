@@ -28,7 +28,7 @@ format:
 
 [University of Nantes]{style="font-size: 45px; font-weight: bold;"}
 
-[Spring Semester 2023]{style="font-size: 40px; font-weight: bold;"}
+[Winter Semester 2024]{style="font-size: 40px; font-weight: bold;"}
 
 :::: 
 
@@ -176,6 +176,25 @@ ResidualsGaus<-data.frame(y=yGaus,u=uGaus,x=xGaus) %>%
     - [Factors/Groups]{style="font-size: 40px;"}
 
     - [Combinations of Above]{style="font-size: 40px;"}
+
+:::
+
+## Analysis Steps{style="font-size: 60px; font-weight: bold;"}
+
+
+::: {.absolute top="0" left="95%"}
+::: {.sectionhead}
+[1]{style="opacity:0.25"} 2 [3 4 5 6]{style="opacity:0.25"}
+:::
+:::
+
+::: {.incremental}
+
+- Statistical Model Formulation
+
+- Response Variable Distribution
+
+- Organising Fixed Effects
 
 :::
 
